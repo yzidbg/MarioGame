@@ -29,6 +29,7 @@ public class Background {
 
 	protected double defaultSpeed = 0;
         private ArrayList<PlayerScore> jugadores = new ArrayList();
+        private PlayerScore ps;
         
 
 	/**
@@ -53,10 +54,11 @@ public class Background {
 		this.alpha = alpha;
 		this.defaultSpeed = defaultSpeed;
 		this.speedFactor = speedFactor;
-                this.jugadores.add(new PlayerScore("Yesid",100));
-                this.jugadores.add(new PlayerScore("willson",50));
-                this.jugadores.add(new PlayerScore("alejo",50));
-                this.jugadores.add(new PlayerScore("diego",0));
+                this.ps= new PlayerScore(1,"Yesid",0);
+                this.jugadores.add(new PlayerScore(1,"Yesid",100));
+                this.jugadores.add(new PlayerScore(2,"willson",50));
+                this.jugadores.add(new PlayerScore(3,"alejo",50));
+                this.jugadores.add(new PlayerScore(4,"diego",0));
 	}
 
 	// SET methods --------------------------------------------------
@@ -129,10 +131,11 @@ public class Background {
 	public void paint(Graphics g) {
             g.setFont(new Font("TimesRoman", Font.BOLD, 22));
             g.setColor(Color.yellow);
-            int cant=jugadores.size();
+            /*int cant=jugadores.size();
             for (int i =0;i<jugadores.size();i++){
                 g.drawString(jugadores.get(i).getNombrePlayer()+": "+jugadores.get(i).getScorePlayer(), 960*i/cant, 20);
-            }
+            }*/
+            g.drawString(ps.getNombrePlayer()+": "+Coin.COINS_CATCHED, 960/2, 20);  
             
 		int X = (int)x%width;
 		int Y = (int)y%height;
@@ -172,5 +175,9 @@ public class Background {
 			g, img, 0, 0, x, map.getDisplayableHeight(),
 			x, height, 0, height, alpha);
 	}
+        
+        public void sumarPuntos(int x){
+            ps.addScore(x);
+        }
 
 }

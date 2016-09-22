@@ -21,7 +21,8 @@ public class PlatformGame extends Stage {
 	private ImagesLoader loader;
 	private SoundsLoader sounds;
 	private Map map;
-
+        static private int seg;
+        
 	// Gravedad del escenario. Defecto 0.2
 	private float gravity = 0.2F;
 
@@ -153,6 +154,23 @@ public class PlatformGame extends Stage {
 		PlatformGame p = new PlatformGame();
 		p.getWindow().setVisible(true);
 		p.startGame();
+                seg=0;
+                
+                new Thread(new Runnable() {
+				public void run() {
+                                    while(true)
+					try {
+                                            if (seg==60){
+                                                
+                                                p.gameOver();
+                                            }
+                                            seg++;
+                                            System.out.println(seg);
+                                            Thread.sleep(1000);
+					} catch (Exception e) {}
+				}
+			}).start();
+                
 	}
 }  // fin de la clase PlatformGame
 
