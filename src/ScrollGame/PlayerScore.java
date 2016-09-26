@@ -12,7 +12,7 @@ package ScrollGame;
 public class PlayerScore {
     private int codPlayer;
     private String nombrePlayer;
-    private int scorePlayer;
+    private static int scorePlayer;
 
     public PlayerScore() {
     }
@@ -47,8 +47,8 @@ public class PlayerScore {
         this.scorePlayer = scorePlayer;
     }
     
-    public void addScore(int sc){
-        this.scorePlayer+=sc;
+    public static void addScore(int sc){
+        PlayerScore.scorePlayer+=sc;
     }
     
 }

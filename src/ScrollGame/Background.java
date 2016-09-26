@@ -13,23 +13,16 @@ import java.util.ArrayList;
  *
  */
 public class Background {
-
 	public static final int IMG_DIMENSIONS = -1;
-
 	protected Stage stage;
 	protected Map map;
-
 	protected double x, y, speedFactor, speedX, speedY;
-
 	protected float alpha;
-
 	protected int width, height;
-
 	protected BufferedImage img;
-
 	protected double defaultSpeed = 0;
         private ArrayList<PlayerScore> jugadores = new ArrayList();
-        private PlayerScore ps;
+        public PlayerScore ps;
         
 
 	/**
@@ -37,6 +30,8 @@ public class Background {
 	 */
 	public Background(Stage s, String imgName) {
 		this(s, imgName, 1.0, 0, IMG_DIMENSIONS, IMG_DIMENSIONS, 1.0F);
+                this.ps= new PlayerScore(1,"Yesid",0);
+
 	}
 
 	public Background(Stage s, String imgName, double speedFactor,
@@ -55,10 +50,6 @@ public class Background {
 		this.defaultSpeed = defaultSpeed;
 		this.speedFactor = speedFactor;
                 this.ps= new PlayerScore(1,"Yesid",0);
-                this.jugadores.add(new PlayerScore(1,"Yesid",100));
-                this.jugadores.add(new PlayerScore(2,"willson",50));
-                this.jugadores.add(new PlayerScore(3,"alejo",50));
-                this.jugadores.add(new PlayerScore(4,"diego",0));
 	}
 
 	// SET methods --------------------------------------------------
@@ -129,13 +120,13 @@ public class Background {
 	}
 
 	public void paint(Graphics g) {
-            g.setFont(new Font("TimesRoman", Font.BOLD, 22));
+            g.setFont(new Font(Font.MONOSPACED,Font.BOLD, 22));
             g.setColor(Color.yellow);
             /*int cant=jugadores.size();
             for (int i =0;i<jugadores.size();i++){
                 g.drawString(jugadores.get(i).getNombrePlayer()+": "+jugadores.get(i).getScorePlayer(), 960*i/cant, 20);
             }*/
-            g.drawString(ps.getNombrePlayer()+": "+Coin.COINS_CATCHED, 960/2, 20);  
+            g.drawString(ps.getNombrePlayer()+": "+map.fronts.get(0).ps.getScorePlayer()+", "+Coin.COINS_CATCHED, map.getDisplayableWidth()/2, 20);  
             
 		int X = (int)x%width;
 		int Y = (int)y%height;
@@ -171,13 +162,9 @@ public class Background {
 	}
 
 	private void paintCap(Graphics g, int x, int y) {
-		stage.getImagesEffects().paintAlphaImg(
+        	stage.getImagesEffects().paintAlphaImg(
 			g, img, 0, 0, x, map.getDisplayableHeight(),
 			x, height, 0, height, alpha);
 	}
-        
-        public void sumarPuntos(int x){
-            ps.addScore(x);
-        }
 
 }

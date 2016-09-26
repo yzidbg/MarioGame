@@ -54,9 +54,9 @@ public class Map {
 	public ArrayList<Player> players;
 
 	// Lugares desde los cuales es posible que empieze
-	// una jugador. El número de puntos marca el máximo
+	// una jugador. El nï¿½mero de puntos marca el mï¿½ximo
 	// de jugadores que pueden jugar este nivel.
-	// Por lo tanto, como mínimo, debe haber uno.
+	// Por lo tanto, como mï¿½nimo, debe haber uno.
 	public ArrayList<Point> startingPlaces;
 
 	public Stage stage;
@@ -122,7 +122,7 @@ public class Map {
 			while ((line = br.readLine()) != null) {
 				line = line.trim();
 				System.out.println(line);
-				// Si es una linea vacía o un comentario...
+				// Si es una linea vacï¿½a o un comentario...
 				if (line.length() == 0 ||
 					line.startsWith("//")) {
 						continue;
@@ -335,8 +335,8 @@ public boolean endlevel = false;
 
 	public void act() {
 		if (endlevel) return;
-		// Actualizamos las clases de manera estática.
-		// De esta forma hacemos que las imágenes sean
+		// Actualizamos las clases de manera estï¿½tica.
+		// De esta forma hacemos que las imï¿½genes sean
 		// las mismas para todos los WorldObjects(Sprites).
 		Coin.actClass();
 		Brick.actClass();
@@ -376,7 +376,7 @@ public boolean endlevel = false;
 		if (!movingY) {
 			ySpeed = 0;
 		}
-		// Actualizamos los sprites estáticos.
+		// Actualizamos los sprites estï¿½ticos.
 		tileX = (int)xMap/tileXSize;
 		tileY = (int)yMap/tileYSize;
 		accurateX = -(int)xMap%tileXSize;
@@ -419,13 +419,13 @@ public boolean endlevel = false;
 	}int jope = 0;
 
 	public void paint(Graphics g) {
-		if (endlevel) return;
+                if (endlevel) return;
 		// Pintamos los fondos.
 		for (int i=0; i<backs.size(); i++) {
 			Background b = backs.get(i);
 			b.paint(g);
 		}
-		// Pintamos los sprites estáticos.
+		// Pintamos los sprites estï¿½ticos.
 		for (int i=tileX; i<tileX+displayX+1 && i<sizeX; i++) {
 			for (int j=tileY; j<tileY+displayY+1 && j<sizeY; j++) {
 				Sprite s = spriteMap[j][i];
@@ -475,7 +475,7 @@ public boolean endlevel = false;
 			&& y < sizeY) && (spriteMap[(int)y][(int)x] != null);
 	}
 
-	// Métodos GET --------------------------------------------------
+	// Mï¿½todos GET --------------------------------------------------
 	public int getWidth() {
 		return sizeX*tileXSize;
 	}
@@ -491,7 +491,7 @@ public boolean endlevel = false;
 	public int getDisplayableHeight() {
 		return displayY*tileYSize;
 	}
-	//  fin de métodos GET -------------------------------------------
+	//  fin de mï¿½todos GET -------------------------------------------
 
 }  // fin de la case Map
 

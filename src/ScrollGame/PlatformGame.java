@@ -28,7 +28,7 @@ public class PlatformGame extends Stage {
 
 	Point pointCursor = new Point(-1,-1);
 
-	public PlatformGame(boolean applet) {
+	/*public PlatformGame(boolean applet) {
 		super(CANVAS);
 		setFPS(80);
 		setSize(960, 640);
@@ -42,7 +42,7 @@ public class PlatformGame extends Stage {
 		// imagen a el objeto Stage (superclase).
 		setImagesLoader(loader);
 		setSoundsLoader(sounds);
-	}
+	}*/
 
 	public PlatformGame() {
 		super(JFRAME);
@@ -50,7 +50,7 @@ public class PlatformGame extends Stage {
 		setSize(960-6, 640-6);
 		window.setResizable(false);
 		// Creamos el mapa en el mundo=1 nivel=1.
-		map = new Map(this, 1, 3);
+		map = new Map(this, 1, 1);
 		// Creamos los cargadores pero de momento
 		// no cargamos nada.
 		loader = new ImagesLoader("res/img", "loader");
@@ -160,12 +160,13 @@ public class PlatformGame extends Stage {
 				public void run() {
                                     while(true)
 					try {
-                                            if (seg==60){
-                                                
+                                            if (seg==10){
                                                 p.gameOver();
+                                                //p.stopGame();
+                                                
+                                                System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
                                             }
                                             seg++;
-                                            System.out.println(seg);
                                             Thread.sleep(1000);
 					} catch (Exception e) {}
 				}

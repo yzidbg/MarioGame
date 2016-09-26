@@ -78,6 +78,8 @@ public class Coin extends WorldObject {
 					if (nextImg()) {
 						delete = true;
 						COINS_CATCHED++;
+                                                //while()
+                                                PlayerScore.addScore(1);
 					}
 			}
 		} else {
