@@ -12,15 +12,24 @@ package ScrollGame;
 public class PlayerScore {
     private int codPlayer;
     private String nombrePlayer;
+    private int totalScore;
     private static int scorePlayer;
 
     public PlayerScore() {
     }
 
-    public PlayerScore(int codPlayer, String nombrePlayer, int scorePlayer) {
+    public PlayerScore(int codPlayer, String nombrePlayer, int totalScore) {
         this.codPlayer = codPlayer;
         this.nombrePlayer = nombrePlayer;
-        this.scorePlayer = scorePlayer;
+        this.totalScore = totalScore;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
     }
 
     public int getCodPlayer() {
@@ -49,6 +58,10 @@ public class PlayerScore {
     
     public static void addScore(int sc){
         PlayerScore.scorePlayer+=sc;
+    }
+    
+    public void calcTotalCoins(){
+        this.totalScore=scorePlayer;
     }
     
 }

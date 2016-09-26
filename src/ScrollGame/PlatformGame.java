@@ -160,10 +160,13 @@ public class PlatformGame extends Stage {
 				public void run() {
                                     while(true)
 					try {
-                                            if (seg==10){
+                                            if (seg==5){
                                                 p.gameOver();
                                                 //p.stopGame();
-                                                
+                                                System.err.println(p.map.backs.size());
+                                                p.map.backs.get(0).ps.calcTotalCoins();
+                                                p.map.backs.get(0).setEndCollectCoins(true);
+                                                p.map.fronts.get(0).setEndCollectCoins(true);
                                                 System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
                                             }
                                             seg++;

@@ -23,6 +23,7 @@ public class Background {
 	protected double defaultSpeed = 0;
         private ArrayList<PlayerScore> jugadores = new ArrayList();
         public PlayerScore ps;
+        protected boolean endCollectCoins = false;
         
 
 	/**
@@ -80,6 +81,12 @@ public class Background {
 			this.img = img;
 		}
 	}
+
+    public void setEndCollectCoins(boolean endCollectCoins) {
+        this.endCollectCoins = endCollectCoins;
+    }
+        
+        
 	//  end of SET methods ------------------------------------------
 
 
@@ -126,7 +133,13 @@ public class Background {
             for (int i =0;i<jugadores.size();i++){
                 g.drawString(jugadores.get(i).getNombrePlayer()+": "+jugadores.get(i).getScorePlayer(), 960*i/cant, 20);
             }*/
-            g.drawString(ps.getNombrePlayer()+": "+map.fronts.get(0).ps.getScorePlayer()+", "+Coin.COINS_CATCHED, map.getDisplayableWidth()/2, 20);  
+            
+            if(endCollectCoins==true){
+                g.drawString(ps.getNombrePlayer()+": "+map.backs.get(0).ps.getTotalScore(), map.getDisplayableWidth()/2, 20);  
+            
+            }else{
+                g.drawString(ps.getNombrePlayer()+": "+Coin.COINS_CATCHED, map.getDisplayableWidth()/2, 20);
+            }
             
 		int X = (int)x%width;
 		int Y = (int)y%height;
