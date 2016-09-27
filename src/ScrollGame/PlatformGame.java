@@ -50,7 +50,7 @@ public class PlatformGame extends Stage {
 		setSize(960-6, 640-6);
 		window.setResizable(false);
 		// Creamos el mapa en el mundo=1 nivel=1.
-		map = new Map(this, 1, 1);
+		map = new Map(this, 1, 3);
 		// Creamos los cargadores pero de momento
 		// no cargamos nada.
 		loader = new ImagesLoader("res/img", "loader");
@@ -160,10 +160,9 @@ public class PlatformGame extends Stage {
 				public void run() {
                                     while(true)
 					try {
-                                            if (seg==5){
+                                            if (seg==30){
                                                 p.gameOver();
                                                 //p.stopGame();
-                                                System.err.println(p.map.backs.size());
                                                 p.map.backs.get(0).ps.calcTotalCoins();
                                                 p.map.backs.get(0).setEndCollectCoins(true);
                                                 p.map.fronts.get(0).setEndCollectCoins(true);
