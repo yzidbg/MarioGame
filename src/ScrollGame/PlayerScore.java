@@ -18,10 +18,9 @@ public class PlayerScore {
     public PlayerScore() {
     }
 
-    public PlayerScore(int codPlayer, String nombrePlayer, int totalScore) {
+    public PlayerScore(int codPlayer, String nombrePlayer) {
         this.codPlayer = codPlayer;
         this.nombrePlayer = nombrePlayer;
-        this.totalScore = totalScore;
     }
 
     public int getTotalScore() {

@@ -31,7 +31,7 @@ public class Background {
 	 */
 	public Background(Stage s, String imgName) {
 		this(s, imgName, 1.0, 0, IMG_DIMENSIONS, IMG_DIMENSIONS, 1.0F);
-                this.ps= new PlayerScore(1,"Yesid",0);
+                this.ps= new PlayerScore(1,"Yesid");
 
 	}
 
@@ -50,7 +50,7 @@ public class Background {
 		this.alpha = alpha;
 		this.defaultSpeed = defaultSpeed;
 		this.speedFactor = speedFactor;
-                this.ps= new PlayerScore(1,"Yesid",0);
+                this.ps= new PlayerScore(1,"Yesid");
 	}
 
 	// SET methods --------------------------------------------------

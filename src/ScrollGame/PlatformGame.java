@@ -22,6 +22,7 @@ public class PlatformGame extends Stage {
 	private SoundsLoader sounds;
 	private Map map;
         static private int seg;
+        static private int count;
         
 	// Gravedad del escenario. Defecto 0.2
 	private float gravity = 0.2F;
@@ -151,22 +152,36 @@ public class PlatformGame extends Stage {
 	}
 
 	public static void main(String[] args) {
-		PlatformGame p = new PlatformGame();
-		p.getWindow().setVisible(true);
-		p.startGame();
-                seg=0;
+            PlatformGame p = new PlatformGame();
+            p.getWindow().setVisible(true);
+            ClienteLAN f = new ClienteLAN("Lanzamiento partida LAN");
+            count = 0;
+            new Thread(new Runnable() {
+                public void run() {
+                    while(true)
+                        try {
+                            if (count==30){
+                                p.startGame();
+                                f.dispose();
+                            }
+                            count++;
+                            Thread.sleep(1000);
+			} catch (Exception e) {}
+                }
+            }).start();
+		
+            seg=0;
                 
                 new Thread(new Runnable() {
 				public void run() {
                                     while(true)
 					try {
-                                            if (seg==30){
+                                            if (seg==60){
                                                 p.gameOver();
-                                                //p.stopGame();
                                                 p.map.backs.get(0).ps.calcTotalCoins();
                                                 p.map.backs.get(0).setEndCollectCoins(true);
                                                 p.map.fronts.get(0).setEndCollectCoins(true);
-                                                System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
+                                                //System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
                                             }
                                             seg++;
                                             Thread.sleep(1000);
