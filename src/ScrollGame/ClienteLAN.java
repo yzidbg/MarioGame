@@ -49,8 +49,8 @@ public class ClienteLAN extends JFrame{
         add(l3);
         l3.setBounds(330, 10, 40, 20);
         add(listJugad);
-        
-        listJugad.setBounds(10, 40,ancho-20, alto-50);
+        listJugad.setBounds(20, 40,ancho-40, alto-80);
+        listJugad.setEditable(false);
     }   //fin del método inicializarComponentes
     
     public void view(){
