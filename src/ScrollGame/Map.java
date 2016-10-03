@@ -43,6 +43,7 @@ public class Map {
 	public int world, level;
 
 	public String fileName;
+        public PlayerScore ps;
 
 	public WorldObject[][] spriteMap;
 
@@ -75,8 +76,9 @@ public class Map {
 	/**
 	 *
 	 */
-	public Map(Stage s, int world, int level) {
-		StringBuffer sb = new StringBuffer(FILE_PREFIX);
+	public Map(Stage s, int world, int level, PlayerScore ps) {
+            this.ps=ps;
+            StringBuffer sb = new StringBuffer(FILE_PREFIX);
 		int first = sb.indexOf("*");
 		int last = sb.lastIndexOf("*");
 		if (first != last) {
@@ -204,7 +206,7 @@ public boolean endlevel = false;
 	public Background createBackground(String info) {
 		StringTokenizer st = new StringTokenizer(info);
 		if (st.countTokens() == 1) {
-			Background b = new Background(stage, info);
+			Background b = new Background(stage, info, ps);
 			return b;
 		} else if (st.countTokens() != 8) {
 			System.err.println("Error creating Background.\n"
@@ -253,7 +255,7 @@ public boolean endlevel = false;
 			return null;
 		}
 		Background b = new Background(stage, name, speedFactor,
-							 defSpeed, width, height, alpha);
+							 defSpeed, width, height, alpha,ps);
 		b.setX(x);
 		b.setY(y);
 		return b;

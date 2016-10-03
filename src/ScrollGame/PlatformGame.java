@@ -6,11 +6,6 @@ package ScrollGame;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.*;
-import java.util.*;
-
-import javax.swing.*;
-
 
 /**
  *
@@ -45,13 +40,14 @@ public class PlatformGame extends Stage {
 		setSoundsLoader(sounds);
 	}*/
 
-	public PlatformGame() {
+	public PlatformGame(PlayerScore psa) {
 		super(JFRAME);
 		setFPS(80);
 		setSize(960-6, 640-6);
 		window.setResizable(false);
 		// Creamos el mapa en el mundo=1 nivel=1.
-		map = new Map(this, 1, 3);
+                
+		map = new Map(this, 1, 3, psa);
 		// Creamos los cargadores pero de momento
 		// no cargamos nada.
 		loader = new ImagesLoader("res/img", "loader");
@@ -152,17 +148,21 @@ public class PlatformGame extends Stage {
 	}
 
 	public static void main(String[] args) {
-            PlatformGame p = new PlatformGame();
-            p.getWindow().setVisible(true);
+            PlayerScore ps = new PlayerScore();
+            PlatformGame p = new PlatformGame(ps);
+            
             ClienteLANv1 f = new ClienteLANv1("Lanzamiento partida LAN");
-            //Thread hilo = new Thread(f);
-            //hilo.start();
+            
+            
+            
             count = 0;
             new Thread(new Runnable() {
                 public void run() {
                     while(true)
                         try {
                             if (count==30){
+                                ps.setNombrePlayer(f.getNomPlayer());
+                                p.getWindow().setVisible(true);
                                 p.startGame();
                                 f.dispose();
                             }

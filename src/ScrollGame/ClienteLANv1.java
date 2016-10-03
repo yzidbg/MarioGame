@@ -139,5 +139,11 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
             e.printStackTrace();
         }
     }
+
+    public String getNomPlayer() {
+        return nomPlayer;
+    }
+    
+    
     
 }

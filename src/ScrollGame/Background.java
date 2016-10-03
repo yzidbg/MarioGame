@@ -29,15 +29,15 @@ public class Background {
 	/**
 	 *
 	 */
-	public Background(Stage s, String imgName) {
-		this(s, imgName, 1.0, 0, IMG_DIMENSIONS, IMG_DIMENSIONS, 1.0F);
-                this.ps= new PlayerScore(1,"Yesid");
+	public Background(Stage s, String imgName, PlayerScore ps) {
+		this(s, imgName, 1.0, 0, IMG_DIMENSIONS, IMG_DIMENSIONS, 1.0F, ps);
+                //this.ps= ps;
 
 	}
 
 	public Background(Stage s, String imgName, double speedFactor,
 					double defaultSpeed, int width, int height,
-					float alpha) {
+					float alpha, PlayerScore ps) {
 		this.stage = s;
 		this.map = ((PlatformGame)s).getCurrentMap();
 		this.width = (width != IMG_DIMENSIONS) ?
@@ -50,11 +50,18 @@ public class Background {
 		this.alpha = alpha;
 		this.defaultSpeed = defaultSpeed;
 		this.speedFactor = speedFactor;
-                this.ps= new PlayerScore(1,"Yesid");
+                //this.ps= new PlayerScore(1,"Yesid");
+                this.ps= ps;
 	}
 
 	// SET methods --------------------------------------------------
-	public void setX(double x) {
+
+    public void setPs(PlayerScore ps) {
+        this.ps = ps;
+    }
+	
+        
+        public void setX(double x) {
 		this.x = x%width;
 	}
 
