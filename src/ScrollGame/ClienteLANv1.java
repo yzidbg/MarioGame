@@ -22,8 +22,10 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     private JLabel l1;
     private JLabel l2;
     private JLabel l3;
+    private JLabel l4;
     private JEditorPane panel;
     private JButton btnConect;
+    private JTextField txtNomPlayer;
     private int count;
     //Declaramos las variables necesarias para la conexion y comunicacion
     private Socket cliente;
@@ -34,6 +36,8 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     //Si estamos en nuestra misma maquina usamos localhost si no la ip de la maquina servidor
     private String host = "localhost";
     private String mensajes = "";
+    private String nomPlayer;
+    
     
     
 
@@ -50,8 +54,10 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
         count=30;
         l2= new JLabel(String.valueOf(count));
         l3= new JLabel("Segs");
+        l4= new JLabel("Nombre:");
         panel= new JEditorPane();
         btnConect = new JButton("Conectar");
+        txtNomPlayer= new JTextField();
         setLayout(null);
         add(l1);
         l1.setBounds((ancho-200)/2, 10, 200,20);
@@ -59,13 +65,17 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
         l2.setBounds(310, 10, 30, 20);
         add(l3);
         l3.setBounds(330, 10, 40, 20);
+        add(l4);
+        l4.setBounds(20, 250, 80, 20);
         add(panel);
         panel.setBounds(20, 40,ancho-40, 200);
         panel.setEditable(false);
         panel.setContentType("text/html");
         add(btnConect);
-        btnConect.setBounds((ancho/2)-50, 250, 100, 20);
+        btnConect.setBounds(280, 250, 100, 20);
         btnConect.addActionListener(this);
+        add(txtNomPlayer);
+        txtNomPlayer.setBounds(90, 250, 150, 20);
         
     }   //fin del método inicializarComponentes
     
@@ -97,9 +107,11 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
             in = new DataInputStream(cliente.getInputStream());
             out = new DataOutputStream(cliente.getOutputStream());
             btnConect.setEnabled(false);
+            txtNomPlayer.setEditable(false);
+            nomPlayer=txtNomPlayer.getText();
             Thread hilo = new Thread(this);
             hilo.start();
-            enviarMsg("Cliente yz conectado");
+            enviarMsg("Cliente "+nomPlayer+" conectado");
             mensajes="";
        }catch(IOException ex){
            ex.printStackTrace();
