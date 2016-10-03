@@ -154,7 +154,9 @@ public class PlatformGame extends Stage {
 	public static void main(String[] args) {
             PlatformGame p = new PlatformGame();
             p.getWindow().setVisible(true);
-            ClienteLAN f = new ClienteLAN("Lanzamiento partida LAN");
+            ClienteLANv1 f = new ClienteLANv1("Lanzamiento partida LAN");
+            //Thread hilo = new Thread(f);
+            //hilo.start();
             count = 0;
             new Thread(new Runnable() {
                 public void run() {
