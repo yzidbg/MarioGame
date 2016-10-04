@@ -150,11 +150,7 @@ public class PlatformGame extends Stage {
 	public static void main(String[] args) {
             PlayerScore ps = new PlayerScore();
             PlatformGame p = new PlatformGame(ps);
-            
             ClienteLANv1 f = new ClienteLANv1("Lanzamiento partida LAN");
-            
-            
-            
             count = 0;
             new Thread(new Runnable() {
                 public void run() {
@@ -164,7 +160,7 @@ public class PlatformGame extends Stage {
                                 ps.setNombrePlayer(f.getNomPlayer());
                                 p.getWindow().setVisible(true);
                                 p.startGame();
-                                f.dispose();
+                                //f.setVisible(false);
                             }
                             count++;
                             Thread.sleep(1000);

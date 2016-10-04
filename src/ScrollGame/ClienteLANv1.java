@@ -111,6 +111,7 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
             nomPlayer=txtNomPlayer.getText();
             Thread hilo = new Thread(this);
             hilo.start();
+            enviarMsg(nomPlayer);
             enviarMsg("Cliente "+nomPlayer+" conectado");
             mensajes="";
        }catch(IOException ex){
@@ -143,7 +144,5 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     public String getNomPlayer() {
         return nomPlayer;
     }
-    
-    
     
 }
