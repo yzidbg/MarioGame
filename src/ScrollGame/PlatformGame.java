@@ -156,7 +156,7 @@ public class PlatformGame extends Stage {
                 public void run() {
                     while(true)
                         try {
-                            if (count==30){
+                            if (count==30 || f.isRemoteStart()==true){
                                 ps.setNombrePlayer(f.getNomPlayer());
                                 p.getWindow().setVisible(true);
                                 p.startGame();

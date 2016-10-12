@@ -37,6 +37,7 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     private String host = "localhost";
     private String mensajes = "";
     private String nomPlayer;
+    private boolean remoteStart;
     
     
     
@@ -122,10 +123,17 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     @Override
     public void run() {
         try{
+            String s;
             //Ciclo infinito que escucha por mensajes del servidor y los muestra en el panel
             while(true){
-                mensajes += in.readUTF();
-                panel.setText(mensajes);
+                s=null;
+                s=in.readUTF();
+                if(s.equals("start")){
+                    this.remoteStart=true;
+                }else{
+                    mensajes += s;
+                    panel.setText(mensajes);
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -144,5 +152,10 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     public String getNomPlayer() {
         return nomPlayer;
     }
+
+    public boolean isRemoteStart() {
+        return remoteStart;
+    }
+    
     
 }
