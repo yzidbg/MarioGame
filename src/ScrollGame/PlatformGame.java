@@ -154,13 +154,14 @@ public class PlatformGame extends Stage {
             count = 0;
             new Thread(new Runnable() {
                 public void run() {
-                    while(true)
+                    while(count<=30)
                         try {
-                            if (count==30 || f.isRemoteStart()==true){
+                            if (count>=30 || f.isRemoteStart()==true){
                                 ps.setNombrePlayer(f.getNomPlayer());
                                 p.getWindow().setVisible(true);
                                 p.startGame();
                                 //f.setVisible(false);
+                                count=999;
                             }
                             count++;
                             Thread.sleep(1000);
