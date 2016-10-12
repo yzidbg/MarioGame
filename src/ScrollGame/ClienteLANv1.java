@@ -67,16 +67,16 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
         add(l3);
         l3.setBounds(330, 10, 40, 20);
         add(l4);
-        l4.setBounds(20, 250, 80, 20);
+        l4.setBounds(20, 220, 80, 20);
         add(panel);
-        panel.setBounds(20, 40,ancho-40, 180);
+        panel.setBounds(20, 40,ancho-40, 170);
         panel.setEditable(false);
         panel.setContentType("text/html");
         add(btnConect);
-        btnConect.setBounds(280, 250, 100, 20);
+        btnConect.setBounds(280, 220, 100, 20);
         btnConect.addActionListener(this);
         add(txtNomPlayer);
-        txtNomPlayer.setBounds(90, 250, 150, 20);
+        txtNomPlayer.setBounds(90, 220, 150, 20);
         
     }   //fin del método inicializarComponentes
     
