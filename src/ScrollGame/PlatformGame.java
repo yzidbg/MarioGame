@@ -177,6 +177,7 @@ public class PlatformGame extends Stage {
 					try {
                                             if (seg==60){
                                                 p.gameOver();
+                                                f.setVisible(true);
                                                 p.map.backs.get(0).ps.calcTotalCoins();
                                                 p.map.backs.get(0).setEndCollectCoins(true);
                                                 p.map.fronts.get(0).setEndCollectCoins(true);

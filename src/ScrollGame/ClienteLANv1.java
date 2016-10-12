@@ -69,7 +69,7 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
         add(l4);
         l4.setBounds(20, 250, 80, 20);
         add(panel);
-        panel.setBounds(20, 40,ancho-40, 200);
+        panel.setBounds(20, 40,ancho-40, 180);
         panel.setEditable(false);
         panel.setContentType("text/html");
         add(btnConect);
