@@ -35,6 +35,7 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     private int puerto = 2027;
     //Si estamos en nuestra misma maquina usamos localhost si no la ip de la maquina servidor
     private String host = "localhost";
+    //private String host = "192.168.10.143";
     private String mensajes = "";
     private String nomPlayer;
     private boolean remoteStart;
