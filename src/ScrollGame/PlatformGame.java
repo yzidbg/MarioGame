@@ -23,22 +23,6 @@ public class PlatformGame extends Stage {
     private PlayerScore ps;
     Point pointCursor = new Point(-1,-1);
     
-    /*public PlatformGame(boolean applet) {
-        super(CANVAS);
-	setFPS(80);
-	setSize(960, 640);
-	// Creamos el mapa en el mundo=1 nivel=1.
-	map = new Map(this, 1, 3);
-	// Creamos los cargadores pero de momento
-	// no cargamos nada.
-	loader = new ImagesLoader("res/img", "loader");
-	sounds = new SoundsLoader("res/sounds", "loader");
-	// A�adimos los cargadores de sonido y de
-	// imagen a el objeto Stage (superclase).
-	setImagesLoader(loader);
-	setSoundsLoader(sounds);
-    }*/
-
     public PlatformGame(PlayerScore psa) {
         super(JFRAME);
         this.ps=psa;
