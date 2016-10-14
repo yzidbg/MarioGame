@@ -148,6 +148,7 @@ public class PlatformGame extends Stage {
         PlatformGame p = new PlatformGame(ps);
         ClienteLANv1 f = new ClienteLANv1("Lanzamiento partida LAN");
         count = 0;
+        seg=0;
         new Thread(new Runnable() {
             public void run() {
                 while(count<=30){
@@ -157,6 +158,26 @@ public class PlatformGame extends Stage {
                             p.getWindow().setVisible(true);
                             p.startGame();
                             f.setVisible(false);
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    while(true){
+                                        try{
+                                            if (seg==30){
+                                                p.gameOver();
+                                                f.enviarMsg("endGame"+p.getPs().getScorePlayer()+
+                                                        ":"+p.getPs().getNombrePlayer());
+                                                f.setVisible(true);
+                                                p.map.backs.get(0).ps.calcTotalCoins();
+                                                p.map.backs.get(0).setEndCollectCoins(true);
+                                                p.map.fronts.get(0).setEndCollectCoins(true);
+                                                //System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
+                                            }
+                                            seg++;
+                                            Thread.sleep(1000);
+                                            }catch (Exception e) {}
+                                    }
+                                }
+                            }).start();
                             count=999;
                         }
                         count++;
@@ -164,28 +185,9 @@ public class PlatformGame extends Stage {
                     }catch (Exception e) {}
                 }
             }}).start();
-        seg=0;
+        
                 
-        new Thread(new Runnable() {
-            public void run() {
-                while(true){
-                    try{
-                        if (seg==30){
-                            p.gameOver();
-                            f.enviarMsg("endGame"+p.getPs().getScorePlayer()+
-                                    ":"+p.getPs().getNombrePlayer());
-                            f.setVisible(true);
-                            p.map.backs.get(0).ps.calcTotalCoins();
-                            p.map.backs.get(0).setEndCollectCoins(true);
-                            p.map.fronts.get(0).setEndCollectCoins(true);
-                            //System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
-                        }
-                        seg++;
-                        Thread.sleep(1000);
-			}catch (Exception e) {}
-                }
-            }}).start();
-    }
+            }
 }  // fin de la clase PlatformGame
 
 // PlatformGame.java ------------------------------------------------
