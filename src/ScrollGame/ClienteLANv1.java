@@ -90,15 +90,24 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     private void contador(){
         new Thread(new Runnable() {
                 public void run() {
-                    while(count>0)
+                    while(count>=0)
                         try {
                             l2.setText(String.valueOf(count));
+                            if(count==0){
+                                ajusteSalida();
+                            }
                             count--;
                             Thread.sleep(1000);
 			} catch (Exception e) {}
                 }
             }).start();
 	
+    }
+    
+    private void ajusteSalida(){
+        l1.setText("Resultados del Juego");
+        l2.setText("");
+        l3.setText("");
     }
 
     @Override
@@ -132,7 +141,7 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
                 if(s.equals("start")){
                     this.remoteStart=true;
                 }else{
-                    mensajes += s;
+                    mensajes += "<br>"+s;
                     panel.setText(mensajes);
                 }
             }
