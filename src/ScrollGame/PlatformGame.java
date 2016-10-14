@@ -149,6 +149,8 @@ public class PlatformGame extends Stage {
         ClienteLANv1 f = new ClienteLANv1("Lanzamiento partida LAN");
         count = 0;
         seg=0;
+        //Hilo que controla la ejecución del portal de conexiones 
+        //al servidor durante 30 segundos
         new Thread(new Runnable() {
             public void run() {
                 while(count<=30){
@@ -158,6 +160,7 @@ public class PlatformGame extends Stage {
                             p.getWindow().setVisible(true);
                             p.startGame();
                             f.setVisible(false);
+                            //Hilo que controla la ejecución del juego durante 30 segundos
                             new Thread(new Runnable() {
                                 public void run() {
                                     while(true){
@@ -170,7 +173,6 @@ public class PlatformGame extends Stage {
                                                 p.map.backs.get(0).ps.calcTotalCoins();
                                                 p.map.backs.get(0).setEndCollectCoins(true);
                                                 p.map.fronts.get(0).setEndCollectCoins(true);
-                                                //System.err.println("las monedas: "+p.map.backs.get(0).ps.getScorePlayer());
                                             }
                                             seg++;
                                             Thread.sleep(1000);
