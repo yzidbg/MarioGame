@@ -10,12 +10,12 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 import javax.swing.*;
-import javax.swing.ScrollPaneConstants;
+
 /**                           
  *
  * @author yz
  */
-public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
+public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable{
     private final int alto=300;
     private final int ancho=400;
     private String titVent;
@@ -43,7 +43,7 @@ public class ClienteLANv1 extends JFrame implements ActionListener, Runnable{
     
     
 
-    public ClienteLANv1(String titulo) throws HeadlessException {
+    public ClienteLANv1_TCP(String titulo) throws HeadlessException {
         setTitle(titulo);
         initComp();
         view();
