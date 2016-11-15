@@ -5,6 +5,8 @@
  */
 package ScrollGame;
 
+import Controlador.JugadorController;
+import Modelo.Jugador;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -15,17 +17,19 @@ import javax.swing.*;
  *
  * @author yz
  */
-public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable{
-    private final int alto=300;
+public class ClienteLAN_TCP extends JFrame implements ActionListener, Runnable{
+    private final int alto=310;
     private final int ancho=400;
     private String titVent;
     private JLabel l1;
     private JLabel l2;
     private JLabel l3;
     private JLabel l4;
+    private JLabel l5;
     private JEditorPane panel;
     private JButton btnConect;
     private JTextField txtNomPlayer;
+    private JPasswordField txtPassword;
     private int count;
     //Declaramos las variables necesarias para la conexion y comunicacion
     private Socket cliente;
@@ -40,10 +44,14 @@ public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable
     private String nomPlayer;
     private boolean remoteStart;
     
+    Jugador jugador = null;
+    JugadorController controladorJugador = new JugadorController();
+
+    
     
     
 
-    public ClienteLANv1_TCP(String titulo) throws HeadlessException {
+    public ClienteLAN_TCP(String titulo) throws HeadlessException {
         setTitle(titulo);
         initComp();
         view();
@@ -57,9 +65,11 @@ public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable
         l2= new JLabel(String.valueOf(count));
         l3= new JLabel("Segs");
         l4= new JLabel("Nombre:");
+        l5= new JLabel("Contraseña:");
         panel= new JEditorPane();
         btnConect = new JButton("Conectar");
         txtNomPlayer= new JTextField();
+        txtPassword = new JPasswordField();
         setLayout(null);
         add(l1);
         l1.setBounds((ancho-200)/2, 10, 200,20);
@@ -68,17 +78,21 @@ public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable
         add(l3);
         l3.setBounds(330, 10, 40, 20);
         add(l4);
-        l4.setBounds(20, 220, 80, 20);
+        l4.setBounds(20, 220, 100, 20);
+        add(l5);
+        l5.setBounds(20, 250, 100, 20);
         add(panel);
         panel.setBounds(20, 40,ancho-40, 170);
         panel.setEditable(false);
         panel.setContentType("text/html");
         add(btnConect);
-        btnConect.setBounds(280, 220, 100, 20);
+        btnConect.setBounds(280, 250, 100, 20);
         btnConect.addActionListener(this);
         add(txtNomPlayer);
-        txtNomPlayer.setBounds(90, 220, 150, 20);
-        
+        txtNomPlayer.setBounds(110, 220, 150, 20);
+        add(txtPassword);
+        txtPassword.setBounds(110,250,150,20);
+        txtNomPlayer.requestFocus(true);
     }   //fin del método inicializarComponentes
     
     public void view(){
@@ -101,7 +115,6 @@ public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable
 			} catch (Exception e) {}
                 }
             }).start();
-	
     }
     
     private void ajusteSalida(){
@@ -112,22 +125,59 @@ public class ClienteLANv1_TCP extends JFrame implements ActionListener, Runnable
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try{
-             // organizacion de direccion y Nro de puerto
-            cliente = new Socket(host,puerto);
-            in = new DataInputStream(cliente.getInputStream());
-            out = new DataOutputStream(cliente.getOutputStream());
-            btnConect.setEnabled(false);
-            txtNomPlayer.setEditable(false);
-            nomPlayer=txtNomPlayer.getText();
-            Thread hilo = new Thread(this);
-            hilo.start();
-            enviarMsg(nomPlayer);
-            enviarMsg("Cliente "+nomPlayer+" conectado");
-            mensajes="";
-       }catch(IOException ex){
-           ex.printStackTrace();
-       }
+        if(buscarJugador(txtNomPlayer.getText().trim())){
+            if(Integer.parseInt(jugador.getIdTipoJug())==200){
+                if(login()){
+                    try{
+                         // organizacion de direccion y Nro de puerto
+                        cliente = new Socket(host,puerto);
+                        in = new DataInputStream(cliente.getInputStream());
+                        out = new DataOutputStream(cliente.getOutputStream());
+                        btnConect.setEnabled(false);
+                        txtNomPlayer.setEditable(false);
+                        nomPlayer=txtNomPlayer.getText();
+                        Thread hilo = new Thread(this);
+                        hilo.start();
+                        enviarMsg(nomPlayer);
+                        enviarMsg("Cliente "+nomPlayer+" conectado");
+                        mensajes="";
+                   }catch(IOException ex){
+                       ex.printStackTrace();
+                   }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Error de contraseña; intente de nuevo");
+                    txtNomPlayer.setText(null);
+                    txtNomPlayer.requestFocus(true);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Acceso Restringido. Sólo para jugadores-user!");
+                txtNomPlayer.setText(null);
+                txtPassword.setText(null);
+                txtNomPlayer.requestFocus(true);
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "El usuario no existe");
+            txtNomPlayer.setText(null);
+            txtPassword.setText(null);
+            txtNomPlayer.requestFocus(true);
+        }
+    }
+    
+    private boolean buscarJugador(String nick){
+        jugador = controladorJugador.consultarUnJugador("nick", nick);
+        if (jugador==null) return false;
+        else return true;
+    }
+    
+    private boolean login(){
+        String pwr = new String();
+        char [] p = txtPassword.getPassword();
+        for(int i=0;i<p.length;i++){
+            pwr+=p[i];
+        }
+        if(jugador.getPassword().equals(pwr))return true;
+        else return false;
     }
 
     @Override

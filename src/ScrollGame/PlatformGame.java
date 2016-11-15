@@ -132,7 +132,7 @@ public class PlatformGame extends Stage {
         PlayerScore ps = new PlayerScore();
         PlatformGame p = new PlatformGame(ps);
         
-        ClienteLANv1_TCP a = new ClienteLANv1_TCP("Lanzamiento TCP partida LAN");
+        ClienteLAN_TCP a = new ClienteLAN_TCP("Lanzamiento TCP partida LAN");
         startTPC(a,ps,p);
         
         count = 0;
@@ -140,8 +140,8 @@ public class PlatformGame extends Stage {
 
     }
     
-    private static void startTPC(ClienteLANv1_TCP f, PlayerScore ps, PlatformGame p){
-                new Thread(new Runnable() {
+    private static void startTPC(ClienteLAN_TCP f, PlayerScore ps, PlatformGame p){
+        new Thread(new Runnable() {
             public void run() {
                 while(count<=30){
                     try {
