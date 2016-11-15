@@ -131,38 +131,13 @@ public class PlatformGame extends Stage {
     public static void main(String[] args) {
         PlayerScore ps = new PlayerScore();
         PlatformGame p = new PlatformGame(ps);
-        int op=0;
-        boolean bandera=false;
         
-        do{
-            try{
-                op = Integer.parseInt(JOptionPane.showInputDialog("Digite Opción\n1. TCP\n2. UDP"));
-                if(op==1 || op==2){
-                    bandera=true;
-                }
-                
-            }catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null,"Solo se permiten numeros");
-                bandera=false;
-            }
-        }while(!bandera);
-        
-        switch (op){
-            case 1:
-                ClienteLANv1_TCP a = new ClienteLANv1_TCP("Lanzamiento TCP partida LAN");
-                startTPC(a,ps,p);
-                break;
-            case 2:
-                ClienteLANv2_UDP b = new ClienteLANv2_UDP("Lanzamiento UDP partida LAN");
-                startUDP(b, ps, p);
-                break;
-        }
-        //ClienteLANv1_TCP or ClienteLANv2_UDP
+        ClienteLANv1_TCP a = new ClienteLANv1_TCP("Lanzamiento TCP partida LAN");
+        startTPC(a,ps,p);
         
         count = 0;
         seg=0;
-        //Hilo que controla la ejecución del portal de conexiones 
-        //al servidor durante 30 segundos
+
     }
     
     private static void startTPC(ClienteLANv1_TCP f, PlayerScore ps, PlatformGame p){
@@ -175,7 +150,7 @@ public class PlatformGame extends Stage {
                             p.getWindow().setVisible(true);
                             p.startGame();
                             f.setVisible(false);
-                            //Hilo que controla la ejecución del juego durante 30 segundos
+                            //Hilo que controla la ejecuciï¿½n del juego durante 30 segundos
                             new Thread(new Runnable() {
                                 public void run() {
                                     while(true){
@@ -204,44 +179,6 @@ public class PlatformGame extends Stage {
             }}).start();
     }
     
-        private static void startUDP(ClienteLANv2_UDP f, PlayerScore ps, PlatformGame p){
-                new Thread(new Runnable() {
-            public void run() {
-                while(count<=30){
-                    try {
-                        if (count>=30 || f.isRemoteStart()==true){
-                            ps.setNombrePlayer(f.getNomPlayer());
-                            p.getWindow().setVisible(true);
-                            p.startGame();
-                            f.setVisible(false);
-                            //Hilo que controla la ejecución del juego durante 30 segundos
-                            new Thread(new Runnable() {
-                                public void run() {
-                                    while(true){
-                                        try{
-                                            if (seg==30){
-                                                p.gameOver();
-                                                f.enviarMsg("endGame"+p.getPs().getScorePlayer()+
-                                                        ":"+p.getPs().getNombrePlayer());
-                                                f.setVisible(true);
-                                                p.map.backs.get(0).ps.calcTotalCoins();
-                                                p.map.backs.get(0).setEndCollectCoins(true);
-                                                p.map.fronts.get(0).setEndCollectCoins(true);
-                                            }
-                                            seg++;
-                                            Thread.sleep(1000);
-                                            }catch (Exception e) {}
-                                    }
-                                }
-                            }).start();
-                            count=999;
-                        }
-                        count++;
-                        Thread.sleep(1000);
-                    }catch (Exception e) {}
-                }
-            }}).start();
-    }
 }  // fin de la clase PlatformGame
 
 // PlatformGame.java ------------------------------------------------
