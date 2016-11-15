@@ -4,6 +4,7 @@
 package ScrollGame;
 
 
+import Vista.Reportes;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -160,6 +161,9 @@ public class PlatformGame extends Stage {
                                                 f.enviarMsg("endGame"+p.getPs().getScorePlayer()+
                                                         ":"+p.getPs().getNombrePlayer());
                                                 f.setVisible(true);
+                                                Reportes r = new Reportes(p.getPs().getNombrePlayer(),
+                                                    p.getPs().getScorePlayer());
+                                                r.setVisible(true);
                                                 p.map.backs.get(0).ps.calcTotalCoins();
                                                 p.map.backs.get(0).setEndCollectCoins(true);
                                                 p.map.fronts.get(0).setEndCollectCoins(true);

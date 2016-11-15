@@ -24,6 +24,8 @@ public class Reportes extends javax.swing.JFrame {
     
     JugadorController controladorJugador = new JugadorController();
     ConexionController controladorConexion = new ConexionController();
+    private String nick;
+    private int score;
     private DefaultTableModel modeloRes = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -32,15 +34,17 @@ public class Reportes extends javax.swing.JFrame {
     };
     
     
-    public Reportes() {
+    public Reportes(String nick, int score) {
+        this.nick=nick;
+        this.score=score;
         initComponents();
+        setearValores();
         setearTablaRes();
         fillTablaTop10();
     }
     
     private void setearTablaRes(){
         modeloRes.addColumn("#");
-        
         modeloRes.addColumn("NickName");
         modeloRes.addColumn("DirIP");
         modeloRes.addColumn("FechaHora");
@@ -64,6 +68,10 @@ public class Reportes extends javax.swing.JFrame {
         tablaRes.getColumnModel().getColumn(2).setPreferredWidth(60);
         tablaRes.getColumnModel().getColumn(3).setPreferredWidth(120);
         tablaRes.getColumnModel().getColumn(4).setPreferredWidth(20);
+    }
+    
+    private void setearValores(){
+        lblPts.setText("Jugador: "+nick+"; Puntos: "+score);
     }
     
     /**
@@ -180,38 +188,7 @@ public class Reportes extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Reportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Reportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Reportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Reportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Reportes().setVisible(true);
-            }
-        });
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
