@@ -11,7 +11,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
+import java.security.MessageDigest;
 import javax.swing.*;
+import org.apache.commons.codec.binary.Hex;
 
 /**                           
  *
@@ -46,7 +48,7 @@ public class ClienteLAN_TCP extends JFrame implements ActionListener, Runnable{
     
     Jugador jugador = null;
     JugadorController controladorJugador = new JugadorController();
-
+    private MessageDigest  md = null;
     
     
     
@@ -171,13 +173,27 @@ public class ClienteLAN_TCP extends JFrame implements ActionListener, Runnable{
     }
     
     private boolean login(){
-        String pwr = new String();
+        String pwrSal = new String();
+        byte[] mb=null;
         char [] p = txtPassword.getPassword();
-        for(int i=0;i<p.length;i++){
-            pwr+=p[i];
-        }
-        if(jugador.getPassword().equals(pwr))return true;
+        String pwr = charToStringM(p);
+        try{
+            md= MessageDigest.getInstance("SHA-1");
+            md.update(pwr.getBytes());
+            mb = md.digest();
+            pwrSal=charToStringM(Hex.encodeHex(mb));
+        }catch(Exception e){}
+        
+        if(jugador.getPassword().equals(pwrSal))return true;
         else return false;
+    }
+    
+    private String charToStringM(char [] c){
+        String r="";
+        for(int i =0; i<c.length; i++){
+            r+=c[i];
+        }
+        return r;
     }
 
     @Override
