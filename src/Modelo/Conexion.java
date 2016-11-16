@@ -11,37 +11,33 @@ import java.sql.ResultSet;
  *
  * @author yz
  */
-public class Conexion5 {
+public class Conexion {
     private String id;
     private String ipCon;
     private String fechaHora;
-    private String conexiones;
+    private String puntos;
     private String nick;
+    private String idJugador;
 
-    public Conexion5() {
+    public Conexion() {
     }
 
-    public Conexion5(String id, String ipCon, String fechaHora, String conexiones, String nick) {
+    public Conexion(String id, String ipCon, String fechaHora, String puntos, String nick, String idJugador) {
         this.id = id;
         this.ipCon = ipCon;
         this.fechaHora = fechaHora;
-        this.conexiones = conexiones;
+        this.puntos = puntos;
         this.nick = nick;
-    }
-    
-    public Conexion5(String ipCon, String fechaHora, String conexiones, String nick) {
-        this.ipCon = ipCon;
-        this.fechaHora = fechaHora;
-        this.conexiones = conexiones;
-        this.nick = nick;
+        this.idJugador = idJugador;
     }
 
-    public Conexion5(ResultSet rs) {
+       public Conexion(ResultSet rs) {
         try{
             nick=rs.getString("nick");
             ipCon=rs.getString("ip");
             fechaHora=rs.getString("fecha_hora");
-            conexiones=rs.getString("conn");
+            puntos=rs.getString("puntaje");
+            idJugador=rs.getString("jugadores_id");
         }catch(Exception e){}
     }
 
@@ -69,12 +65,12 @@ public class Conexion5 {
         this.fechaHora = fechaHora;
     }
 
-    public String getConexiones() {
-        return conexiones;
+    public String getPuntos() {
+        return puntos;
     }
 
-    public void setConexiones(String conexiones) {
-        this.conexiones = conexiones;
+    public void setPuntos(String puntos) {
+        this.puntos = puntos;
     }
 
     public String getNick() {
@@ -85,10 +81,17 @@ public class Conexion5 {
         this.nick = nick;
     }
 
+    public String getIdJugador() {
+        return idJugador;
+    }
+
+    public void setIdJugador(String idJugador) {
+        this.idJugador = idJugador;
+    }
+
     @Override
     public String toString() {
-        return "Conexion5{" + "id=" + id + ", ipCon=" + ipCon + ", fechaHora=" + fechaHora + ", conexiones=" + conexiones + ", nick=" + nick + '}';
+        return "Conexion{" + "id=" + id + ", ipCon=" + ipCon + ", fechaHora=" + fechaHora + ", puntos=" + puntos + ", nick=" + nick + ", idJugador=" + idJugador + '}';
     }
-    
     
 }

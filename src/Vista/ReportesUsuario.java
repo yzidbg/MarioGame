@@ -7,16 +7,19 @@ package Vista;
 
 import Controlador.ConexionController;
 import Controlador.JugadorController;
-import Modelo.Conexion10;
+import Modelo.Conexion;
 import Modelo.Jugador;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.Calendar;
 
 /**
  *
  * @author yz
  */
-public class Reportes extends javax.swing.JFrame {
+public class ReportesUsuario extends javax.swing.JFrame {
 
     /**
      * Creates new form Reportes
@@ -32,13 +35,14 @@ public class Reportes extends javax.swing.JFrame {
             return false; //To change body of generated methods, choose Tools | Templates.
         }
     };
+    Jugador jugador = null;
     
-    
-    public Reportes(String nick, int score) {
+    public ReportesUsuario(String nick, int score) {
         this.nick=nick;
         this.score=score;
         initComponents();
         setearValores();
+        enviarDatos();
         setearTablaRes();
         fillTablaTop10();
     }
@@ -54,11 +58,11 @@ public class Reportes extends javax.swing.JFrame {
     
     private void fillTablaTop10(){
         //setearTablaTop10();
-        Conexion10 c = new Conexion10();
+        Conexion c = new Conexion();
         ArrayList a= controladorConexion.consultarTop10();
         for(int i=0; i<a.size();i++){
             String s;
-            c = (Conexion10) a.get(i);        // TODO add your handling code here:
+            c = (Conexion) a.get(i);        // TODO add your handling code here:
             Object [] fila ={i+1,c.getNick(),c.getIpCon(),c.getFechaHora(),c.getPuntos()};
             modeloRes.addRow(fila);
         }
@@ -72,6 +76,34 @@ public class Reportes extends javax.swing.JFrame {
     
     private void setearValores(){
         lblPts.setText("Jugador: "+nick+"; Puntos: "+score);
+    }
+    
+    private void enviarDatos(){
+        if(buscarJugador(nick)){
+            Conexion c = new Conexion();
+            try{
+                c.setIpCon(InetAddress.getLocalHost().getHostAddress());
+            }catch(Exception e){}
+            c.setFechaHora(fechaHoraAct());
+            c.setPuntos(String.valueOf(score));
+            c.setIdJugador(jugador.getId());
+            System.err.println(c.toString());
+            controladorConexion.addConexion(c);
+        }
+    }
+    
+    private String fechaHoraAct(){
+        Calendar cal1 = Calendar.getInstance();
+        return cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+
+                "-"+cal1.get(Calendar.DATE)+" "+cal1.get(Calendar.HOUR_OF_DAY)+
+                ":"+cal1.get(Calendar.MINUTE)+":"+cal1.get(Calendar.SECOND)+
+                "."+cal1.get(Calendar.MILLISECOND);
+    }
+    
+    private boolean buscarJugador(String nick){
+        jugador = controladorJugador.consultarUnJugador("nick", nick);
+        if (jugador==null) return false;
+        else return true;
     }
     
     /**
@@ -116,13 +148,13 @@ public class Reportes extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jLabel2.setText("Juego actual:");
 
-        lblPts.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        lblPts.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         lblPts.setText("pts");
 
         jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jLabel3.setText("Jugadas registradas:");
 
-        lblJugadas.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        lblJugadas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         lblJugadas.setText("pts");
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N

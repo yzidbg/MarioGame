@@ -5,10 +5,8 @@
  */
 package Controlador;
 
-import DB.ConexionDB10;
-import DB.ConexionDB5;
-import Modelo.Conexion10;
-import Modelo.Conexion5;
+import DB.ConexionDB;
+import Modelo.Conexion;
 import java.util.ArrayList;
 
 /**
@@ -17,8 +15,7 @@ import java.util.ArrayList;
  */
 public class ConexionController {
     ArrayList conexiones = new ArrayList();
-    Conexion10 conexion = null;
-    Conexion5 conexion5 = null;
+    Conexion conexion = null;
     
     public ConexionController() {
     }
@@ -31,29 +28,19 @@ public class ConexionController {
         this.conexiones = conexiones;
     }
 
-    public Conexion10 getConexion() {
+    public Conexion getConexion() {
         return conexion;
     }
 
-    public void setConexion(Conexion10 conexion) {
+    public void setConexion(Conexion conexion) {
         this.conexion = conexion;
-    }
-
-    public Conexion5 getConexion5() {
-        return conexion5;
-    }
-
-    public void setConexion5(Conexion5 conexion5) {
-        this.conexion5 = conexion5;
     }
     
     public ArrayList consultarTop10(){
-        return ConexionDB10.mgr.getTop10();
+        return ConexionDB.mgr.getTop10();
+    }   
+    
+    public void addConexion(Conexion c){
+        ConexionDB.mgr.save(c, "add");
     }
-    
-    public ArrayList consultarTop5(){
-        return ConexionDB5.mgr.getTop5();
-    }
-    
-    
 }
