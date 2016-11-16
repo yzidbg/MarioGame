@@ -18,6 +18,7 @@ public class Conexion {
     private String puntos;
     private String nick;
     private String idJugador;
+    private String cnx;
 
     public Conexion() {
     }
@@ -38,6 +39,7 @@ public class Conexion {
             fechaHora=rs.getString("fecha_hora");
             puntos=rs.getString("puntaje");
             idJugador=rs.getString("jugadores_id");
+            cnx=rs.getString("conn");
         }catch(Exception e){}
     }
 
@@ -87,6 +89,14 @@ public class Conexion {
 
     public void setIdJugador(String idJugador) {
         this.idJugador = idJugador;
+    }
+
+    public String getCnx() {
+        return cnx;
+    }
+
+    public void setCnx(String cnx) {
+        this.cnx = cnx;
     }
 
     @Override

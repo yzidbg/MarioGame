@@ -24,11 +24,19 @@ public class ConexionDB extends BDManager{
         v.add(new Conexion(rs));
     }
     
-    public ArrayList<Conexion> getTop10(){
-        return executeQuery("SELECT jugadores.nick, conexiones.ip, conexiones.fecha_hora, "
+    public ArrayList<Conexion> getTop10(boolean b, String id){
+        if(b==true){
+            return executeQuery("SELECT jugadores.nick, conexiones.ip, conexiones.fecha_hora, "
                 + "conexiones.puntaje FROM jugadores JOIN conexiones "
                 + "ON jugadores.id = conexiones.jugadores_id order by "
                 + "conexiones.puntaje desc Limit 10");
+        }else{
+            return executeQuery("SELECT jugadores.nick, conexiones.ip, conexiones.fecha_hora, "
+                + "conexiones.puntaje FROM jugadores JOIN conexiones "
+                + "ON jugadores.id = conexiones.jugadores_id where "
+                + "jugadores_id='"+id+"'");
+
+        }
     }
     
     public void save(Conexion c, String s){

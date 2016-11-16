@@ -49,9 +49,8 @@ public class JugadorController {
         return JugadorDB.mgr.getJugador(campo, dato);
     }
     
-    public void modificarMaxPts(String id, String nick, String maxPts){
+    public void modificarMaxPts(String id, String maxPts){
         jugador.setId(id);
-        jugador.setNick(nick);
         jugador.setMaxPts(maxPts);
         JugadorDB.mgr.save(jugador, "updateMaxPts");
     }

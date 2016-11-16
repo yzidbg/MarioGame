@@ -9,7 +9,12 @@ import Controlador.ConexionController;
 import Controlador.JugadorController;
 import Modelo.Conexion;
 import Modelo.Jugador;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +47,7 @@ public class ReportesUsuario extends javax.swing.JFrame {
         this.score=score;
         initComponents();
         setearValores();
+        //obtenerJugadas();
         enviarDatos();
         setearTablaRes();
         fillTablaTop10();
@@ -78,18 +84,46 @@ public class ReportesUsuario extends javax.swing.JFrame {
         lblPts.setText("Jugador: "+nick+"; Puntos: "+score);
     }
     
+    private void obtenerJugadas(){
+        Conexion c = new Conexion();
+        ArrayList a = controladorConexion.consultarNumConex(jugador.getId());
+        c = (Conexion) a.get(0);
+        //lblJugadas.setText(c.getCnx());
+    }
+    
     private void enviarDatos(){
-        if(buscarJugador(nick)){
+        if(buscarJugador(nick)==true){
             Conexion c = new Conexion();
             try{
-                c.setIpCon(InetAddress.getLocalHost().getHostAddress());
+                //c.setIpCon(InetAddress.getLocalHost().getHostAddress());
+                c.setIpCon(getIP());
             }catch(Exception e){}
             c.setFechaHora(fechaHoraAct());
             c.setPuntos(String.valueOf(score));
             c.setIdJugador(jugador.getId());
-            System.err.println(c.toString());
             controladorConexion.addConexion(c);
         }
+    }
+    
+    public String getIP() {
+        String publicIP;
+    	try {
+                URL tempURL = new URL("http://checkip.amazonaws.com");
+                HttpURLConnection tempConn = (HttpURLConnection)tempURL.openConnection();
+                InputStream tempInStream = tempConn.getInputStream();
+                InputStreamReader tempIsr = new InputStreamReader(tempInStream);
+                BufferedReader tempBr = new BufferedReader(tempIsr);        
+ 
+                publicIP = tempBr.readLine();
+ 
+                tempBr.close();
+                tempInStream.close();
+ 
+        } catch (Exception ex) {
+                publicIP = "<No es posible resolver la direccion IP>";   
+          }
+ 
+         return publicIP;
     }
     
     private String fechaHoraAct(){
@@ -100,8 +134,15 @@ public class ReportesUsuario extends javax.swing.JFrame {
                 "."+cal1.get(Calendar.MILLISECOND);
     }
     
+    private void evalMaxPts(){
+        if(Integer.parseInt(jugador.getMaxPts())<score){
+            controladorJugador.modificarMaxPts(jugador.getId(), String.valueOf(score));
+        }
+    }
+    
     private boolean buscarJugador(String nick){
         jugador = controladorJugador.consultarUnJugador("nick", nick);
+        System.err.println(jugador.toString());
         if (jugador==null) return false;
         else return true;
     }
@@ -121,8 +162,6 @@ public class ReportesUsuario extends javax.swing.JFrame {
         tablaRes = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         lblPts = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        lblJugadas = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -151,12 +190,6 @@ public class ReportesUsuario extends javax.swing.JFrame {
         lblPts.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         lblPts.setText("pts");
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel3.setText("Jugadas registradas:");
-
-        lblJugadas.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        lblJugadas.setText("pts");
-
         jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jLabel4.setText("Top 10 Jugadores Puntuaciones Altas:");
 
@@ -174,10 +207,6 @@ public class ReportesUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblJugadas))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblPts)))
@@ -192,11 +221,7 @@ public class ReportesUsuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblPts))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblJugadas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,11 +249,9 @@ public class ReportesUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblJugadas;
     private javax.swing.JLabel lblPts;
     private javax.swing.JTable tablaRes;
     // End of variables declaration//GEN-END:variables

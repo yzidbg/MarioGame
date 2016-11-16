@@ -37,10 +37,14 @@ public class ConexionController {
     }
     
     public ArrayList consultarTop10(){
-        return ConexionDB.mgr.getTop10();
+        return ConexionDB.mgr.getTop10(true,"");
     }   
     
     public void addConexion(Conexion c){
         ConexionDB.mgr.save(c, "add");
+    }
+    
+    public ArrayList consultarNumConex(String id){
+        return ConexionDB.mgr.getTop10(false,id);
     }
 }

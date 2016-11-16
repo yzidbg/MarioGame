@@ -45,7 +45,7 @@ public class JugadorDB extends BDManager{
                 break;
             case "updateMaxPts":
                 mgr.execute("update jugadores set max_pts ='" + j.getMaxPts()
-                        + "'where id = " + j.getId() +"");
+                        + "' where id = '" + j.getId() +"'");
                 break;
             case "updateJugador":
                 mgr.execute("update jugadores set nick ='" + j.getNick()
